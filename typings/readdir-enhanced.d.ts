@@ -1,6 +1,6 @@
 declare module "readdir-enhanced" {
 
-	import fs = require('fs');
+	import { Stats } from 'fs';
 
 	namespace readdir {
 		interface IFilterFunction {
@@ -9,12 +9,12 @@ declare module "readdir-enhanced" {
 
 		interface IOptions {
 			filter?: string | RegExp | IFilterFunction;
-			deep?: boolean | number;
+			deep?: boolean | number | RegExp | string | IFilterFunction;
 			sep?: string;
 			basePath?: string;
 		}
 
-		interface IEntry extends fs.Stats {
+		interface IEntry extends Stats {
 			path: string;
 		}
 
@@ -27,8 +27,8 @@ declare module "readdir-enhanced" {
 		function readdirAsyncStat(root: string, options?: IOptions): Promise<IEntry[]>;
 
 		// Callback
-		function async(root: string, cb: (err, files: string[]) => void): void;
-		function async(root: string, options: IOptions, cb: (err, files: string[]) => void): void;
+		function async(root: string, cb: (err: Error, files: string[]) => void): void;
+		function async(root: string, options: IOptions, cb: (err: Error, files: string[]) => void): void;
 
 		// Stream
 		function stream(root: string, options?: IOptions): NodeJS.ReadableStream;
