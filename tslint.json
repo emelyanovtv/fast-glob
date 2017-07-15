@@ -5,17 +5,31 @@
 	"rules": {
 		"object-curly-spacing": false,
 		"ter-arrow-parens": true,
-		"class-name": true,
+
+		"adjacent-overload-signatures": true,
 		"member-access": true,
 		"member-ordering": [
 			true,
-			"public-before-private",
-			"static-before-instance",
-			"variables-before-functions"
+			{
+				"order": [
+					"static-field",
+					"instance-field",
+					"constructor",
+					"public-instance-method",
+					"protected-instance-method",
+					"private-instance-method"
+				]
+			}
 		],
-		"no-inferrable-types": [
+		"no-empty-interface": "true",
+		"no-reference": true,
+		"no-var-requires": true,
+		"typedef": [
 			true,
-			"ignore-params"
+			"call-signature",
+			"parameter",
+			"property-declaration",
+			"member-variable-declaration"
 		],
 		"typedef-whitespace": [
 			true,
@@ -26,6 +40,12 @@
 				"property-declaration": "nospace",
 				"variable-declaration": "nospace"
 			}
+		],
+		"unified-signatures": true,
+		"variable-name": [
+			true,
+			"check-format",
+			"allow-leading-underscore"
 		]
 	}
 }
