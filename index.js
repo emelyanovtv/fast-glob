@@ -1,4 +1,9 @@
-const fGlob = require('./out/fglob');
-module.exports = fGlob.default;
-module.exports.default = fGlob.default;
-module.exports.sync = fGlob.sync;
+'use strict';
+
+const fastGlob = require('./out/fast-glob');
+
+module.exports = fastGlob.async;
+
+module.exports.default = fastGlob.async;
+module.exports.async = fastGlob.async;
+module.exports.sync = fastGlob.sync;

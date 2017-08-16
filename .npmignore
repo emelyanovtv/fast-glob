@@ -9,9 +9,9 @@ tslint.json
 # directories
 
 .tmp
-benchmark
+.benchmark
 out/**/*.spec.js
 out/**/*.js.map
 src
-types
+typings
 node_modules

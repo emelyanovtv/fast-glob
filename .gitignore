@@ -12,6 +12,7 @@ node_modules/
 
 # Compiled and tempory files
 .tmp/
+.benchmark/
 out/
 
 # Other files

@@ -18,8 +18,11 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"declaration": true,
-		"importHelpers": true,
 
 		"pretty": true
-	}
+	},
+	"include": [
+		"typings/**/*",
+		"src/**/*"
+	]
 }
