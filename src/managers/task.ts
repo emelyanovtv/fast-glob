@@ -137,8 +137,7 @@ function buildTasksFromGroups(groups: TGroups): ITask[] {
 
 		tasks.push({
 			base: group,
-			negative: getNegativePatterns(patterns),
-			positive: getPositivePatterns(patterns),
+			ignore: getNegativePatterns(patterns),
 			patterns
 		});
 	});

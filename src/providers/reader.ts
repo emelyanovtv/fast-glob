@@ -54,8 +54,8 @@ export default class Reader {
 	private getReaderOptions(task: ITask): readdir.IReaddirOptions {
 		return {
 			basePath: task.base === '.' ? '' : task.base,
-			filter: (entry) => this.filter(entry, task.patterns, task.negative),
-			deep: (entry) => this.deep(entry, task.negative),
+			filter: (entry) => this.filter(entry, task.patterns, task.ignore),
+			deep: (entry) => this.deep(entry, task.ignore),
 			sep: '/'
 		};
 	}

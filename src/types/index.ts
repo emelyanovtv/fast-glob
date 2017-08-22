@@ -39,8 +39,7 @@ export type IPartialOptions = Partial<IOptions>;
 export interface ITask {
 	base: string;
 	patterns: string[];
-	positive: string[];
-	negative: string[];
+	ignore: string[];
 }
 
 export interface IEntry extends fs.Stats {

@@ -40,8 +40,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -53,8 +52,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/*'],
-					positive: ['.tmp/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -73,8 +71,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp/components',
 					patterns: ['.tmp/components/**/*'],
-					positive: ['.tmp/components/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -90,8 +87,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*.css'],
-					positive: ['.tmp/**/*.css'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -109,8 +105,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/**/*.css'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/**/*.css']
+					ignore: ['.tmp/**/*.css']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -122,8 +117,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/components/**'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/components']
+					ignore: ['.tmp/components']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -141,8 +135,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/**/footer/**'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/**/footer']
+					ignore: ['.tmp/**/footer']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -161,8 +154,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/**/footer/**/*.css', '!.tmp/**/header/**/*.css'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/**/footer/**/*.css', '.tmp/**/header/**/*.css']
+					ignore: ['.tmp/**/footer/**/*.css', '.tmp/**/header/**/*.css']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -192,8 +184,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.map((entry: IEntry) => entry.path).sort(), expected.sort());
@@ -220,8 +211,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.',
 					patterns: ['**/*'],
-					positive: ['**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -246,8 +236,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -270,8 +259,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -289,8 +277,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -313,8 +300,7 @@ describe('Provders → Reader', () => {
 				const actual = await reader.asyncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -345,8 +331,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -358,8 +343,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/*'],
-					positive: ['.tmp/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -378,8 +362,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp/components',
 					patterns: ['.tmp/components/**/*'],
-					positive: ['.tmp/components/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -395,8 +378,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*.css'],
-					positive: ['.tmp/**/*.css'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -414,8 +396,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/**/*.css'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/**/*.css']
+					ignore: ['.tmp/**/*.css']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -427,8 +408,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/components/**'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/components']
+					ignore: ['.tmp/components']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -446,8 +426,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/**/footer/**'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/**/footer']
+					ignore: ['.tmp/**/footer']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -466,8 +445,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*', '!.tmp/**/footer/**/*.css', '!.tmp/**/header/**/*.css'],
-					positive: ['.tmp/**/*'],
-					negative: ['.tmp/**/footer/**/*.css', '.tmp/**/header/**/*.css']
+					ignore: ['.tmp/**/footer/**/*.css', '.tmp/**/header/**/*.css']
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -497,8 +475,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.map((entry: IEntry) => entry.path).sort(), expected.sort());
@@ -525,8 +502,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.',
 					patterns: ['**/*'],
-					positive: ['**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -551,8 +527,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -575,8 +550,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -594,8 +568,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());
@@ -618,8 +591,7 @@ describe('Provders → Reader', () => {
 				const actual = reader.syncReader({
 					base: '.tmp',
 					patterns: ['.tmp/**/*'],
-					positive: ['.tmp/**/*'],
-					negative: []
+					ignore: []
 				});
 
 				assert.deepEqual(actual.sort(), expected.sort());

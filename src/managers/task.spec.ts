@@ -9,7 +9,7 @@ describe('Managers → Task', () => {
 	describe('.generateTasks', () => {
 		it('should return a single task', () => {
 			const expected: ITask[] = [
-				{ base: '.', patterns: ['**/*', '!**/*.txt'], positive: ['**/*'], negative: ['**/*.txt'] }
+				{ base: '.', patterns: ['**/*', '!**/*.txt'], ignore: ['**/*.txt'] }
 			];
 
 			const actual = manager.generateTasks(['**/*', '!**/*.txt'], <any>{ ignore: [] });
@@ -19,7 +19,7 @@ describe('Managers → Task', () => {
 
 		it('should return a single task without negative patterns', () => {
 			const expected: ITask[] = [
-				{ base: '.', patterns: ['**/*'], positive: ['**/*'], negative: [] }
+				{ base: '.', patterns: ['**/*'], ignore: [] }
 			];
 
 			const actual = manager.generateTasks(['**/*'], <any>{ ignore: [] });
@@ -29,7 +29,7 @@ describe('Managers → Task', () => {
 
 		it('should return a single task with negative patterns from options', () => {
 			const expected: ITask[] = [
-				{ base: '.', patterns: ['**/*', '!**/*.txt'], positive: ['**/*'], negative: ['**/*.txt'] }
+				{ base: '.', patterns: ['**/*', '!**/*.txt'], ignore: ['**/*.txt'] }
 			];
 
 			const actual = manager.generateTasks(['**/*'], <any>{ ignore: ['**/*.txt'] });
@@ -39,7 +39,7 @@ describe('Managers → Task', () => {
 
 		it('should return a single task with base directory', () => {
 			const expected: ITask[] = [
-				{ base: 'a', patterns: ['a/**/*', '!a/**/*.txt'], positive: ['a/**/*'], negative: ['a/**/*.txt'] }
+				{ base: 'a', patterns: ['a/**/*', '!a/**/*.txt'], ignore: ['a/**/*.txt'] }
 			];
 
 			const actual = manager.generateTasks(['a/**/*', '!a/**/*.txt'], <any>{ ignore: [] });
@@ -49,14 +49,8 @@ describe('Managers → Task', () => {
 
 		it('should return two tasks', () => {
 			const expected: ITask[] = [
-				{
-					base: 'a', patterns: ['a/**/*', '!**/*.txt', '!**/*.js'],
-					negative: ['**/*.txt', '**/*.js'], positive: ['a/**/*']
-				},
-				{
-					base: 'b', patterns: ['b/**/*', '!**/*.txt', '!**/*.js', '!b/**/*.md'],
-					negative: ['**/*.txt', '**/*.js', 'b/**/*.md'], positive: ['b/**/*']
-				}
+				{ base: 'a', patterns: ['a/**/*', '!**/*.txt', '!**/*.js'], ignore: ['**/*.txt', '**/*.js'] },
+				{ base: 'b', patterns: ['b/**/*', '!**/*.txt', '!**/*.js', '!b/**/*.md'], ignore: ['**/*.txt', '**/*.js', 'b/**/*.md'] }
 			];
 
 			const actual = manager.generateTasks(['a/**/*', 'b/**/*', '!**/*.txt', '!b/**/*.md'], <any>{
@@ -68,10 +62,7 @@ describe('Managers → Task', () => {
 
 		it('should work with patterns used for excluding directories', () => {
 			const expected: ITask[] = [
-				{
-					base: '.', patterns: ['**/*', '!**/.git', '!**/.tmp/**'],
-					positive: ['**/*'], negative: ['**/.git', '**/.tmp']
-				}
+				{ base: '.', patterns: ['**/*', '!**/.git', '!**/.tmp/**'], ignore: ['**/.git', '**/.tmp'] }
 			];
 
 			const actual = manager.generateTasks(['**/*', '!**/.git/**'], <any>{
