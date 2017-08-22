@@ -8,8 +8,11 @@ import { IOptions, ITask, IEntry } from '../types';
 export type TEntries = Array<string | IEntry>;
 
 export default class Reader {
-	constructor(private readonly options: IOptions) {}
+	constructor(private readonly options: IOptions) { }
 
+	/**
+	 * Use async API to read entries for Task.
+	 */
 	public asyncReader(task: ITask): Promise<TEntries> {
 		const cwd = path.resolve(this.options.cwd, task.base);
 		const api = this.options.stats ? readdir.readdirStreamStat : readdir.stream;
@@ -25,6 +28,9 @@ export default class Reader {
 		});
 	}
 
+	/**
+	 * Use sync API to read entries for Task.
+	 */
 	public syncReader(task: ITask): TEntries {
 		const cwd = path.resolve(this.options.cwd, task.base);
 		const api = this.options.stats ? readdir.readdirSyncStat : readdir.sync;
