@@ -17,6 +17,11 @@ export interface IOptions {
 	 */
 	ignore: string[];
 	/**
+	 * In some cases, patterns can result in the same file showing up multiple times in the result set.
+	 * By default, this implementation prevents duplicates in the result set.
+	 */
+	uniq: boolean;
+	/**
 	 * Return `fs.Stats` with `path` property instead of file path.
 	 */
 	stats: boolean;

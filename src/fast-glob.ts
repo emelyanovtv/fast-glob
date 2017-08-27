@@ -1,3 +1,5 @@
+import * as union from 'arr-union';
+
 import Reader, { TEntries } from './providers/reader';
 import { generateTasks } from './managers/task';
 
@@ -14,6 +16,7 @@ function prepareOptions(options: IPartialOptions): IOptions {
 		cwd: process.cwd(),
 		deep: true,
 		ignore: [],
+		uniq: true,
 		onlyDirectories: false,
 		onlyFiles: false,
 		stats: false,
@@ -32,7 +35,7 @@ export function async(source: string | string[], options?: IPartialOptions): Pro
 	const reader = new Reader(opts);
 
 	return Promise.all(tasks.map((task) => reader.asyncReader(task))).then((entries) => {
-		return entries.reduce((res, to) => [].concat(res, to), []);
+		return opts.uniq ? union.apply(null, entries) : entries.reduce((res, to) => [].concat(res, to), []);
 	});
 }
 
@@ -46,5 +49,7 @@ export function sync(source: string | string[], options?: IPartialOptions): TEnt
 	const tasks = generateTasks(patterns, opts);
 	const reader = new Reader(opts);
 
-	return tasks.map((task) => reader.syncReader(task)).reduce((res, to) => [].concat(res, to), []);
+	const results = tasks.map((task) => reader.syncReader(task));
+
+	return opts.uniq ? union.apply(null, results) : results.reduce((res, to) => [].concat(res, to), []);
 }

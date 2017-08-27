@@ -74,6 +74,13 @@ The deep option can be set to true to traverse the entire directory structure, o
 
 Add an array of glob patterns to exclude matches. You can use `**/something/**` or `**/something` patterns to exclude directories. Excluded directories will not be read.
 
+#### uniq
+
+  * Type: `boolean`
+  * Default: `true`
+
+In some cases, patterns can result in the same file showing up multiple times in the result set.
+
 #### stats
 
   * Type: `boolean`
