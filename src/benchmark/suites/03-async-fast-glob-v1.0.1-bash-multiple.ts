@@ -1,12 +1,12 @@
 import * as path from 'path';
 
-import * as fastGlob from '../../fast-glob';
+import fastGlob from 'fast-glob';
 
 const cwd = path.join(process.cwd(), '.benchmark', process.env.BENCHMARK_CWD);
 
 console.time('timer');
 
-fastGlob.async(['**/*.md'], { cwd, ignore: ['**/50000/**'] })
+fastGlob(['**/*', '**/*.md', '**/*.txt', '!**/*.txt'], { cwd, ignore: ['**/50000/**'] })
 	.then((matches) => {
 		console.info('files: ' + matches.length);
 		console.timeEnd('timer');
