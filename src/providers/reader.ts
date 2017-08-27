@@ -81,7 +81,7 @@ export default class Reader {
 		}
 
 		// Filter by patterns
-		return (<any>micromatch).all(entry.path, patterns);
+		return micromatch([entry.path], patterns).length !== 0;
 	}
 
 	/**
@@ -98,6 +98,6 @@ export default class Reader {
 			}
 		}
 
-		return !micromatch.any(entry.path, negative);
+		return micromatch([entry.path], negative).length === 0;
 	}
 }
