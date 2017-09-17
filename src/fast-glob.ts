@@ -1,9 +1,12 @@
 import * as union from 'arr-union';
+import * as multistream from 'multistream';
 
 import SyncReader from './providers/reader-sync';
 import PromiseReader from './providers/reader-promise';
+import StreamReader from './providers/reader-stream';
 import { generateTasks } from './managers/task';
 
+import { Stream } from 'stream';
 import { IPartialOptions, IOptions, TEntries } from './types';
 
 function assertPatternsInput(patterns: string[]): never | void {
@@ -53,4 +56,17 @@ export function sync(source: string | string[], options?: IPartialOptions): TEnt
 	const results = tasks.map((task) => reader.read(task));
 
 	return opts.uniq ? union.apply(null, results) : results.reduce((res, to) => [].concat(res, to), []);
+}
+
+export function stream(source: string | string[], options?: IPartialOptions): Stream {
+	const patterns: string[] = [].concat(source);
+
+	assertPatternsInput(patterns);
+
+	const opts = prepareOptions(options);
+
+	const tasks = generateTasks(patterns, opts);
+	const reader = new StreamReader(opts);
+
+	return multistream(tasks.map(reader.read));
 }
