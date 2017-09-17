@@ -50,3 +50,5 @@ export interface ITask {
 export interface IEntry extends fs.Stats {
 	path?: string;
 }
+
+export type TEntries = Array<string | IEntry>;

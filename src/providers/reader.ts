@@ -1,5 +1,3 @@
-import * as path from 'path';
-
 import * as readdir from 'readdir-enhanced';
 import * as micromatch from 'micromatch';
 
@@ -8,62 +6,25 @@ import { IOptions, ITask, IEntry } from '../types';
 export type TEntries = Array<string | IEntry>;
 
 export default class Reader {
-	constructor(private readonly options: IOptions) { }
+	constructor(public readonly options: IOptions) { }
 
 	/**
-	 * Use async API to read entries for Task.
+	 * Return true if error has ENOENT code.
 	 */
-	public asyncReader(task: ITask): Promise<TEntries> {
-		const cwd = path.resolve(this.options.cwd, task.base);
-		const api = this.options.stats ? readdir.readdirStreamStat : readdir.stream;
-
-		return new Promise((resolve, reject) => {
-			const entries: TEntries = [];
-
-			const stream = api(cwd, this.getReaderOptions(task));
-
-			stream.on('error', (err) => this.isEnoentCodeError(err) ? resolve([]) : reject(err));
-			stream.on('data', (entry) => entries.push(this.options.transform(entry)));
-			stream.on('end', () => resolve(entries));
-		});
-	}
-
-	/**
-	 * Use sync API to read entries for Task.
-	 */
-	public syncReader(task: ITask): TEntries {
-		const cwd = path.resolve(this.options.cwd, task.base);
-		const api = this.options.stats ? readdir.readdirSyncStat : readdir.sync;
-
-		try {
-			const entries = api(cwd, this.getReaderOptions(task));
-
-			return this.options.transform ? (<any>entries).map(this.options.transform) : entries;
-		} catch (err) {
-			if (this.isEnoentCodeError(err)) {
-				return [];
-			}
-
-			throw err;
-		}
+	public isEnoentCodeError(err: any): boolean {
+		return err.code === 'ENOENT';
 	}
 
 	/**
 	 * Return options for reader.
 	 */
-	private getReaderOptions(task: ITask): readdir.IReaddirOptions {
+	public getReaderOptions(task: ITask): readdir.IReaddirOptions {
 		return {
 			basePath: task.base === '.' ? '' : task.base,
 			filter: (entry) => this.filter(entry, task.patterns, task.ignore),
 			deep: (entry) => this.deep(entry, task.ignore),
 			sep: '/'
 		};
-	}
-	/**
-	 * Return true if error has ENOENT code.
-	 */
-	private isEnoentCodeError(err: any): boolean {
-		return err.code === 'ENOENT';
 	}
 
 	/**

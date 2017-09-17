@@ -1,9 +1,10 @@
 import * as union from 'arr-union';
 
-import Reader, { TEntries } from './providers/reader';
+import SyncReader from './providers/reader-sync';
+import PromiseReader from './providers/reader-promise';
 import { generateTasks } from './managers/task';
 
-import { IPartialOptions, IOptions } from './types';
+import { IPartialOptions, IOptions, TEntries } from './types';
 
 function assertPatternsInput(patterns: string[]): never | void {
 	if (!Array.isArray(patterns) || !patterns.every((pattern) => typeof pattern === 'string')) {
@@ -32,9 +33,9 @@ export function async(source: string | string[], options?: IPartialOptions): Pro
 	const opts = prepareOptions(options);
 
 	const tasks = generateTasks(patterns, opts);
-	const reader = new Reader(opts);
+	const reader = new PromiseReader(opts);
 
-	return Promise.all(tasks.map((task) => reader.asyncReader(task))).then((entries) => {
+	return Promise.all(tasks.map((task) => reader.read(task))).then((entries) => {
 		return opts.uniq ? union.apply(null, entries) : entries.reduce((res, to) => [].concat(res, to), []);
 	});
 }
@@ -47,9 +48,9 @@ export function sync(source: string | string[], options?: IPartialOptions): TEnt
 	const opts = prepareOptions(options);
 
 	const tasks = generateTasks(patterns, opts);
-	const reader = new Reader(opts);
+	const reader = new SyncReader(opts);
 
-	const results = tasks.map((task) => reader.syncReader(task));
+	const results = tasks.map((task) => reader.read(task));
 
 	return opts.uniq ? union.apply(null, results) : results.reduce((res, to) => [].concat(res, to), []);
 }
